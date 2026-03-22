@@ -1,0 +1,60 @@
+{
+  "name": "@ansvar/swedish-data-protection-mcp",
+  "version": "0.1.0",
+  "mcpName": "eu.ansvar/swedish-data-protection-mcp",
+  "description": "IMY (Swedish data protection authority) MCP server — decisions, sanctions, and guidance on GDPR enforcement in Sweden",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "bin": {
+    "swedish-data-protection-mcp": "dist/src/index.js"
+  },
+  "files": [
+    "dist",
+    "server.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ansvar-Systems/swedish-data-protection-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ansvar-Systems/swedish-data-protection-mcp/issues"
+  },
+  "homepage": "https://github.com/Ansvar-Systems/swedish-data-protection-mcp#readme",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "claude",
+    "imy",
+    "swedish-data-protection",
+    "gdpr",
+    "sweden",
+    "data-protection",
+    "compliance",
+    "ansvar"
+  ],
+  "author": "Ansvar Systems AB <hello@ansvar.ai>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/http-server.ts",
+    "start": "node dist/src/http-server.js",
+    "seed": "npx tsx scripts/seed-sample.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "better-sqlite3": "^9.4.3",
+    "zod": "^3.22.4"
+  }
+}
