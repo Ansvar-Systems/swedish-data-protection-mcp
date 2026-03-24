@@ -18,7 +18,6 @@ COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
 
 COPY --from=builder /app/dist/ dist/
-COPY data/ data/
 
 # Non-root user for security
 RUN addgroup --system --gid 1001 mcp && \
