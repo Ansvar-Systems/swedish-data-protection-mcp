@@ -1,33 +1,37 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "eu.ansvar/swedish-data-protection-mcp",
-  "description": "Query IMY decisions, sanctions, and guidance on data protection and GDPR enforcement in Sweden",
+  "description": "IMY (Swedish data protection authority) MCP server — decisions, sanctions, and guidance on GDPR enforcement in Sweden",
   "repository": {
     "url": "https://github.com/Ansvar-Systems/swedish-data-protection-mcp",
     "source": "github"
   },
   "homepage": "https://ansvar.eu",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "keywords": [
-    "imy",
-    "swedish-data-protection",
-    "gdpr",
+    "data protection",
     "sweden",
-    "data-protection",
-    "privacy",
-    "sanctions",
+    "regulation",
     "compliance",
-    "mcp",
-    "ansvar"
+    "mcp"
   ],
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@ansvar/swedish-data-protection-mcp",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "transport": {
         "type": "stdio"
+      }
+    },
+    {
+      "registryType": "npm",
+      "identifier": "@ansvar/swedish-data-protection-mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "streamable-http",
+        "url": "https://mcp.ansvar.eu/swedish-data-protection/mcp"
       }
     }
   ]
