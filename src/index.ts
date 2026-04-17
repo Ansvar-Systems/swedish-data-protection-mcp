@@ -229,11 +229,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
         const _citation = buildCitation(
           parsed.reference,
-          (decision as Record<string, unknown>).title as string || parsed.reference,
+          (decision as unknown as Record<string, unknown>).title as string || parsed.reference,
           "se_dp_get_decision",
           { reference: parsed.reference },
         );
-        return textContent({ ...decision as Record<string, unknown>, _citation });
+        return textContent({ ...decision as unknown as Record<string, unknown>, _citation });
       }
 
       case "se_dp_search_guidelines": {
@@ -255,11 +255,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
         const _citation = buildCitation(
           String(parsed.id),
-          (guideline as Record<string, unknown>).title as string || `Guideline ${parsed.id}`,
+          (guideline as unknown as Record<string, unknown>).title as string || `Guideline ${parsed.id}`,
           "se_dp_get_guideline",
           { id: String(parsed.id) },
         );
-        return textContent({ ...guideline as Record<string, unknown>, _citation });
+        return textContent({ ...guideline as unknown as Record<string, unknown>, _citation });
       }
 
       case "se_dp_list_topics": {
