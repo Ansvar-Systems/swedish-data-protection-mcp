@@ -10,8 +10,6 @@
  */
 
 import Database from "better-sqlite3";
-import { existsSync, mkdirSync } from "node:fs";
-import { dirname } from "node:path";
 
 const DB_PATH = process.env["IMY_DB_PATH"] ?? "data/imy.db";
 
@@ -147,17 +145,13 @@ let _db: Database.Database | null = null;
 
 export function getDb(): Database.Database {
   if (_db) return _db;
-
-  const dir = dirname(DB_PATH);
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true });
-  }
-
-  _db = new Database(DB_PATH);
-  _db.pragma("journal_mode = WAL");
-  _db.pragma("foreign_keys = ON");
-  _db.exec(SCHEMA_SQL);
-
+  // Read-only: DB is baked into the image at build time (publish-ghcr.yml
+  // Release-provisioning per the db_release_path manifest pattern). Runtime
+  // never writes. Container rootfs will be read_only:true per the future
+  // mcp-defaults compose anchor; opening write-mode + setting WAL + execing
+  // CREATE TABLE IF NOT EXISTS would fail with "unable to open database
+  // file". Schema is exported for offline ingestion scripts.
+  _db = new Database(DB_PATH, { readonly: true, fileMustExist: true });
   return _db;
 }
 
