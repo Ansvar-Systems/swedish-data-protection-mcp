@@ -1,0 +1,40 @@
+{{- if .Values.agentgateway.enabled }}
+{{- $pathBase := default .Release.Name .Values.agentgateway.pathBase }}
+---
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayBackend
+metadata:
+  name: {{ include "swedish-data-protection-mcp.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "swedish-data-protection-mcp.labels" . | nindent 4 }}
+spec:
+  mcp:
+    targets:
+      - name: {{ include "swedish-data-protection-mcp.fullname" . }}
+        static:
+          host: {{ include "swedish-data-protection-mcp.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+          port: {{ .Values.service.port }}
+          protocol: StreamableHTTP
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "swedish-data-protection-mcp.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "swedish-data-protection-mcp.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ .Values.agentgateway.gatewayName }}
+      namespace: {{ .Values.agentgateway.namespace }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /{{ $pathBase }}
+      backendRefs:
+        - name: {{ include "swedish-data-protection-mcp.fullname" . }}
+          group: agentgateway.dev
+          kind: AgentgatewayBackend
+{{- end }}

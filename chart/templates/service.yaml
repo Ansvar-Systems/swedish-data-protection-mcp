@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "swedish-data-protection-mcp.fullname" . }}
+  labels:
+    {{- include "swedish-data-protection-mcp.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      appProtocol: agentgateway.dev/mcp
+  selector:
+    {{- include "swedish-data-protection-mcp.selectorLabels" . | nindent 4 }}
