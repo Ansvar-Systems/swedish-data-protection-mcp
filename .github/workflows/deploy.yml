@@ -2,7 +2,7 @@ name: Deploy to Cluster
 
 on:
   workflow_run:
-    workflows: ["Build and Push to GHCR"]
+    workflows: ["Publish GHCR Image"]
     types: [completed]
     branches: [main]
 
